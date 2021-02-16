@@ -10,7 +10,7 @@ try {
 } catch (err) { console.log(err.name + ': ' + err.message) };
 
 // Configure module aliases
-require('module-alias')
+require('module-alias/register')
 
 // Import Discord.js
 const Discord = require('discord.js')
@@ -32,6 +32,7 @@ const client = new Discord.Client({
 client.on('ready', () => {
     console.log(`Client ready as ${client.user.tag}`)
 
+    // create wokcommands instance
     new WOKCommands(client, {
         commandsDir: 'commands',
         featureDir: 'features',
@@ -41,7 +42,7 @@ client.on('ready', () => {
         .setDefaultPrefix('#')
         .setBotOwner(process.env.OWNER_ID)
         .setDefaultLanguage('english')
-        // .setMongoPath(process.env.MONGO_URI)
+        .setMongoPath(process.env.MONGO_URI)
         .setColor(0x000000)
 })
 

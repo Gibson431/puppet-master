@@ -14,5 +14,12 @@
     "module-alias": "^2.2.2",
     "mongoose": "^5.11.16",
     "wokcommands": "^1.2.1"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@configurations": "./configurations",
+    "@commands": "./commands",
+    "@models": "./models",
+    "@features": "./features"
   }
 }
