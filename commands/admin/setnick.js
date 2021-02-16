@@ -29,6 +29,7 @@ module.exports = {
         client.guilds.cache.each(guild => {
             nickname = cache.get(guild.id) ? cache.get(guild.nickname) : 'Puppet Master'
             prefix = instance.getPrefix(guild)
+            console.log(instance._prefixes);
             guild.me.setNickname(`${prefix} ${nickname}`)
         })
     },
