@@ -26,7 +26,7 @@ const client = new Discord.Client({
             name: process.env.EXTERNAL === 'true' ? 'with new features' : `'Development'`,
         }
     },
-    fetchAllMembers: true
+    fetchAllMembers: false
 })
 
 // Create 'ready' event listener
