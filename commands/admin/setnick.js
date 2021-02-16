@@ -26,11 +26,13 @@ module.exports = {
     init: function (client, instance) {
         let prefix
         let nickname
-        client.guilds.cache.each(guild => {
-            nickname = cache.get(guild.id) ? cache.get(guild.nickname) : 'Puppet Master'
-            prefix = instance.getPrefix(guild)
-            console.log(instance._prefixes);
-            guild.me.setNickname(`${prefix} ${nickname}`)
+        instance.on('databaseConnected', (connection, state) => {
+            client.guilds.cache.each(guild => {
+                nickname = cache.get(guild.id) ? cache.get(guild.nickname) : 'Puppet Master'
+                prefix = instance.getPrefix(guild)
+                console.log(instance._prefixes);
+                guild.me.setNickname(`${prefix} ${nickname}`)
+            })
         })
     },
     callback: async function ({ message, args, instance }) {
