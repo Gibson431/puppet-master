@@ -32,7 +32,7 @@ module.exports = {
         // Find embed and edit
         await guild.channels.cache.each(async (channel) => {
             if (channel.type == 'text') {
-                let result = await channel.messages.fetch(messageID).catch(err => { })
+                let result = await channel.messages.fetch(messageID, true, true).catch(err => { })
                 if (result) {
                     suggestionMessage = result
                     suggestionMessage.edit(await Embed.suggestion(null, suggestionMessage.embeds[0], status, reason)).then(p => {
