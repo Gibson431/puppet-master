@@ -23,7 +23,7 @@ module.exports = (client) => {
 
         // Draw background
         const background = await Canvas.loadImage(
-            path.join(__dirname, '../assets/background.png')
+            path.join(__dirname, '../../assets/background.png')
         )
         let x = 0
         let y = 0
