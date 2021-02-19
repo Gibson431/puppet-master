@@ -40,6 +40,7 @@ module.exports = {
                         updated = true
                         message.reply('Suggestion updated!')
                     }).catch(console.error)
+                    return
                 }
             }
         })
