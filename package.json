@@ -9,8 +9,10 @@
   "author": "Xekso",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "json-stringify-safe": "^5.0.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.11.16",
     "wokcommands": "^1.2.1"
