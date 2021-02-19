@@ -5,12 +5,9 @@ const cache = new Map()
 
 const loadData = async () => {
     const results = await nameSchema.find()
-    console.log(results);
-
     for (const result of results) {
         cache.set(result._id, result.nickname)
     }
-    console.log(cache);
 }
 
 module.exports = {
