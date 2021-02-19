@@ -44,7 +44,7 @@ client.on('ready', () => {
         .setBotOwner(process.env.OWNER_ID)
         .setDefaultLanguage('english')
         .setMongoPath(process.env.MONGO_URI)
-        .setColor(0x000000)
+        .setColor(0x0000FF)
 })
 
 // Start bot
