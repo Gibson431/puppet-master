@@ -1,16 +1,17 @@
 const nameSchema = require("@models/name-schema")
+const mongoose = require("mongoose")
 
 const cache = new Map()
 
 const loadData = async () => {
     const results = await nameSchema.find()
+    console.log(results);
 
     for (const result of results) {
         cache.set(result._id, result.nickname)
     }
+    console.log(cache);
 }
-loadData()
-
 
 module.exports = {
     commands: ['setnick', 'setnickname', 'updatenick', 'updatenickname'],
@@ -23,16 +24,20 @@ module.exports = {
     requiredPermissions: [
         'ADMINISTRATOR'
     ],
-    init: function (client, instance) {
+    init: async function (client, instance) {
         let prefix
         let nickname
-        instance.on('databaseConnected', (connection, state) => {
-            client.guilds.cache.each(guild => {
-                nickname = cache.get(guild.id) ? cache.get(guild.nickname) : 'Puppet Master'
-                prefix = instance.getPrefix(guild)
-                console.log(instance._prefixes);
-                guild.me.setNickname(`${prefix} ${nickname}`)
-            })
+        instance.on('databaseConnected', async (connection, state) => {
+            if (state === 'Connected') {
+                setTimeout(async () => {
+                    await loadData()
+                    client.guilds.cache.each(async guild => {
+                        nickname = cache.get(guild.id) ? cache.get(guild.id) : 'Puppet Master'
+                        prefix = instance.getPrefix(guild)
+                        guild.me.setNickname(`${prefix} ${nickname}`)
+                    })
+                }, 500);
+            }
         })
     },
     callback: async function ({ message, args, instance }) {
@@ -46,7 +51,7 @@ module.exports = {
                 _id: guild.id
             }, {
                 _id: guild.id,
-                nickname: nickname
+                    nickname: nickname,
             }, {
                 upsert: true
             })
