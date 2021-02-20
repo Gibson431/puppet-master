@@ -1,4 +1,3 @@
-// TODO
 const { getChannelId } = require('@commands/admin/setlog')
 const Embed = require('@configurations/embed-construct')
 
