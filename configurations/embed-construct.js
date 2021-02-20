@@ -49,21 +49,49 @@ exports.baseReplyConfessionEmbed = new Discord.MessageEmbed()
     .setTimestamp()
     .setAuthor("Confession >> Ahehe", 'https://cdn.discordapp.com/icons/737374214067322910/99f7f3db057a35dfcc281ce598a5438f.png?size=128')
 
+// exports.deletedMessage = (message) => {
+//     embed = new Discord.MessageEmbed()
+//         .setTimestamp()
+//         .setColor('#485063')
+//         .setAuthor(`${message.author ? message.author.tag : `Unknown`}'s message deleted in channel: ${message.channel.name}`, message.author ? message.author.displayAvatarURL() : null)
+
+//     if (message.attachments.size > 0) {
+//         message.attachments.every(file => {
+//             embed.setImage(file.proxyURL)
+//             embed.setDescription(`\`${message.content}\`\n${file.url}`)
+//         })
+//     }
+//     else { embed.setDescription(`\`${message.content}\``) }
+
+//     return embed
+// }
+
 exports.deletedMessage = (message) => {
-    embed = new Discord.MessageEmbed()
-        .setTimestamp()
-        .setColor('#485063')
-        .setAuthor(`${message.author ? message.author.tag : `Unknown`}'s message deleted in channel: ${message.channel.name}`, message.author ? message.author.displayAvatarURL() : null)
-
+    let attachment = null
     if (message.attachments.size > 0) {
-        message.attachments.every(file => {
-            embed.setImage(file.proxyURL)
-            embed.setDescription(`\`${message.content}\`\n${file.url}`)
-        })
+        attachment = message.attachments.first
     }
-    else { embed.setDescription(`\`${message.content}\``) }
+    if (message.content.length > 1000) { message.content = '```' + message.content.slice(0, 900) + '...```' }
 
-    return embed
+    return {
+        embed: {
+            color: '#485063',
+            author: {
+                name: `${message.author ? message.author.tag : `Unknown`}'s message deleted in channel: ${message.channel.name}`,
+                icon_url: message.author ? message.author.displayAvatarURL() : null
+            },
+            fields: [
+                {
+                    name: `Content:`,
+                    value: message.content
+                }
+            ],
+            image: {
+                url: attachment ? attachment.proxyURL : null
+            },
+            timestamp: new Date()
+        }
+    }
 }
 
 exports.confessionsAlert = new Discord.MessageEmbed()
@@ -178,8 +206,6 @@ exports.todo = ({ todoText, status, optionalArgs = {}, todoMessage = null }) => 
     let color
     let statusMessage
 
-    console.log(optionalArgs.n);
-
     switch (status) {
         case 'complete':
             color = 0x00FF00
@@ -210,11 +236,12 @@ exports.todo = ({ todoText, status, optionalArgs = {}, todoMessage = null }) => 
                 {
                     name: "Status",
                     value: statusMessage
+                },
+                {
+                    name: optionalArgs.n ? 'Note:' : null,
+                    value: optionalArgs.n
                 }
-            ],
-            footer: {
-                text: optionalArgs.n ? `Note: ${optionalArgs.n}` : null
-            }
+            ]
         }
     }
 }
