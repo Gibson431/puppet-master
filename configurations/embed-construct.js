@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-// const Sourcebin = require('sourcebin')
 
 exports.serverInfo = (message) => {
     const { guild } = message
@@ -49,23 +48,6 @@ exports.baseReplyConfessionEmbed = new Discord.MessageEmbed()
     .setTimestamp()
     .setAuthor("Confession >> Ahehe", 'https://cdn.discordapp.com/icons/737374214067322910/99f7f3db057a35dfcc281ce598a5438f.png?size=128')
 
-// exports.deletedMessage = (message) => {
-//     embed = new Discord.MessageEmbed()
-//         .setTimestamp()
-//         .setColor('#485063')
-//         .setAuthor(`${message.author ? message.author.tag : `Unknown`}'s message deleted in channel: ${message.channel.name}`, message.author ? message.author.displayAvatarURL() : null)
-
-//     if (message.attachments.size > 0) {
-//         message.attachments.every(file => {
-//             embed.setImage(file.proxyURL)
-//             embed.setDescription(`\`${message.content}\`\n${file.url}`)
-//         })
-//     }
-//     else { embed.setDescription(`\`${message.content}\``) }
-
-//     return embed
-// }
-
 exports.deletedMessage = (message) => {
     let attachment = null
     if (message.attachments.size > 0) {
@@ -100,19 +82,6 @@ exports.confessionsAlert = new Discord.MessageEmbed()
     .setAuthor("Confessions Update")
 
 exports.error = async (err, message = null) => {
-    // res = await Sourcebin.create(
-    //     [
-    //         {
-    //             content: JSON.stringify(err),
-    //             language: 'R',
-    //         },
-    //     ],
-    //     {
-    //         title: 'THR Error',
-    //         description: err.code,
-    //     }
-    // )
-
     return {
         embed: {
             color: 0xFF0000,
@@ -122,13 +91,6 @@ exports.error = async (err, message = null) => {
                 icon_url: message ? message.author.displayAvatarURL() : null
             },
             description: message ? (`**Cause:**\n> ${message.content}\n**Author:**\n> ${message.author.username}\n**Error code:**\n` + '```' + err + '```') : `\`\`\`${err}\`\`\``,
-            // FIXME
-            // fields: [
-            //     {
-            //         name: 'Sourcebin Link',
-            //         value: res.url
-            //     }
-            // ]
         }
     }
 }
