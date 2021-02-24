@@ -6,12 +6,12 @@ module.exports = async (client) => {
         const { guild } = message
         if (!message.author || !guild || !message.content) { return }
 
-        const channelId = getChannelId(guild.id)
+        const channelId = await getChannelId(guild.id)
         if (!channelId) {
             return
         }
 
-        const channel = guild.channels.cache.get(channelId)
+        const channel = await guild.channels.cache.get(channelId)
         if (!channel) { return }
         await channel.send(await Embed.deletedMessage(message))
         console.log('message logged');
